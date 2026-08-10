@@ -1,0 +1,209 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { site, whatsappLink } from '../site.config';
+
+const catalogEntries = (await getCollection('catalog')).sort((a, b) => a.data.order - b.data.order);
+const testimonialEntries = (await getCollection('testimonials'));
+
+const icons: Record<string, string> = {
+  'livros': '<rect x="6" y="9" width="16" height="30" rx="3" fill="var(--caderno)"/><rect x="26" y="9" width="16" height="30" rx="3" fill="var(--giz)"/>',
+  'sala-de-aula': '<rect x="6" y="6" width="36" height="36" rx="6" fill="var(--sol)"/><path d="M16 24h16M24 16v16" stroke="#332E22" stroke-width="3" stroke-linecap="round"/>',
+  'casa': '<circle cx="24" cy="24" r="18" fill="var(--caderno)"/><path d="M24 15v9l6 4" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+  'jogos': '<rect x="6" y="6" width="16" height="16" rx="3" fill="var(--giz)"/><rect x="26" y="6" width="16" height="16" rx="3" fill="var(--sol)"/><rect x="6" y="26" width="16" height="16" rx="3" fill="var(--sol)"/><rect x="26" y="26" width="16" height="16" rx="3" fill="var(--giz)"/>',
+  'mapas': '<path d="M6 10l12-4 12 4 12-4v32l-12 4-12-4-12 4V10z" fill="var(--caderno)" fill-opacity=".85"/><path d="M18 6v32M30 10v32" stroke="#fff" stroke-width="1.5"/>',
+  'banners': '<rect x="8" y="12" width="32" height="24" rx="3" fill="var(--sol)"/><rect x="8" y="12" width="32" height="7" fill="var(--giz)"/>',
+};
+
+const starSvg = '<svg viewBox="0 0 20 20" fill="var(--sol)"><path d="M10 1l2.6 5.8L19 7.6l-4.6 4.3L15.5 19 10 15.6 4.5 19l1.1-7.1L1 7.6l6.4-.8z"/></svg>';
+---
+<Base
+  title="Jorge Chame — Livros e Materiais Educativos"
+  description="Livros, jogos e banners educativos em Rio das Ostras, Macaé, Barra de São João e Casimiro de Abreu. Fale direto com o Jorge Chame no WhatsApp."
+>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="var(--caderno)"/>
+          <path d="M10 12c4-2 8-2 10 0v16c-2-2-6-2-10 0V12z" fill="#fff"/>
+          <path d="M30 12c-4-2-8-2-10 0v16c2-2 6-2 10 0V12z" fill="#fff" fill-opacity=".75"/>
+        </svg>
+        Jorge Chame
+      </div>
+      <nav class="nav-links">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Fazer pedido</a>
+      </nav>
+      <div class="nav-ctas">
+        <a class="btn btn-primary" href={whatsappLink('Olá! Vim pelo site e quero saber mais sobre os materiais.')} style="padding:.6em 1.2em;font-size:.85rem;" target="_blank" rel="noopener">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Livros · Banners · Material Pedagógico</span>
+        <h1>Ler é viver uma <em>vida melhor.</em></h1>
+        <p class="lede">Muita literatura infantil, jogos e murais educativos — tudo em um só lugar para professores, pais e escolas em Rio das Ostras, Macaé, Barra de São João e Casimiro de Abreu. Conheça o catálogo do Jorge Chame e faça seu pedido, inclusive dos itens fora de estoque.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href={whatsappLink('Olá! Vim pelo site e quero saber mais sobre os materiais.')} target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z" fill="#fff" fill-opacity=".18"/><path d="M17 14.3c-.3-.2-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.6.9-.8 1-.1.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.1-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.6-.4z" fill="#fff"/></svg>
+            Falar no WhatsApp
+          </a>
+          <a class="btn btn-call" href={`tel:${site.phoneNumber}`}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9A6 6 0 0112 5a6 6 0 019.5 7c-2.5 4.5-9.5 9-9.5 9z" stroke="var(--caderno-2)" stroke-width="1.8"/></svg>
+            Ligar para {site.whatsappDisplay}
+          </a>
+          <a class="btn btn-ghost" href="#catalogo">Ver catálogo</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>+45 anos</b><span>de atuação com material didático</span></div>
+          <div class="stat"><b>40+</b><span>modelos entre livros, jogos e banners</span></div>
+          <div class="stat"><b>Sob encomenda</b><span>para itens fora de estoque</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="stack">
+          <div class="book b1"><span>Clássicos e literatura infantil</span></div>
+          <div class="book b2"><span>Banners para sala de aula</span></div>
+          <div class="book b3"><span>Quebra-cabeças educativos</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap about-grid">
+      <div class="portrait">
+        <img src="/images/jorge-chame.jpg" alt="Jorge Chame com materiais pedagógicos" loading="lazy" />
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">Quem leva o carrinho de livros até você</span>
+        <h2 style="margin-top:10px;">Jorge Chame</h2>
+        <p>Há mais de 45 anos levando literatura infantil, jogos pedagógicos e murais para dentro da sala de aula. Do livro de história ao banner do alfabeto, cada peça é escolhida pensando em quem ensina e em quem está aprendendo a ler o mundo.</p>
+        <p>Atendimento direto, sem intermediário: você fala com quem conhece o produto, sabe o que tem em estoque e o que pode ser encomendado.</p>
+        <div class="badges">
+          <span class="badge">Atendimento a escolas</span>
+          <span class="badge">Vendas para pais e professores</span>
+          <span class="badge">Encomendas sob consulta</span>
+          <span class="badge">Rio das Ostras · Macaé · Barra de São João · Casimiro de Abreu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Catálogo</span>
+        <h2>Livros e banners educativos.</h2>
+        <p>Um panorama do que costuma estar disponível — envie mensagem para saber o estoque atual, preços e formas de pagamento.</p>
+      </div>
+      <div class="cat-grid">
+        {catalogEntries.map(async (entry) => {
+          const { Content } = await entry.render();
+          return (
+            <div class="cat-card">
+              <svg class="cat-icon" viewBox="0 0 48 48" fill="none" set:html={icons[entry.data.icon]} />
+              <span class="cat-tag">{entry.data.tag}</span>
+              <h3>{entry.data.title}</h3>
+              <p><Content /></p>
+              {entry.data.instagram_url && (
+                <a class="cat-video" href={entry.data.instagram_url} target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
+                  Ver de perto no Instagram
+                </a>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section id="depoimentos">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Depoimentos</span>
+        <h2>Quem já comprou conta.</h2>
+        <p>Espaço reservado — vamos preenchendo aos poucos conforme os depoimentos chegam.</p>
+      </div>
+      <div class="testi-grid">
+        {testimonialEntries.map(async (entry) => {
+          const { Content } = await entry.render();
+          return (
+            <div class="testi-card">
+              <div class="stars" set:html={starSvg.repeat(entry.data.stars)} />
+              {entry.data.published ? (
+                <p class="testi-quote"><Content /></p>
+              ) : (
+                <p class="testi-empty"><Content /></p>
+              )}
+              <span class="testi-who">— {entry.data.author}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" style="border-top:none;">
+    <div class="wrap" style="padding:0;">
+      <div class="contact">
+        <div class="contact-inner">
+          <div>
+            <span class="eyebrow">Fazer pedido</span>
+            <h2>Quer conhecer preços ou encomendar um item fora de estoque?</h2>
+            <p>Chame no WhatsApp ou ligue com o nome do produto, a quantidade e sua cidade — a resposta vem com disponibilidade, preço e prazo.</p>
+            <ul class="contact-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9A6 6 0 0112 5a6 6 0 019.5 7c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8"/></svg>
+                Livros, jogos, banners e mapas — consulte o item que procura
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 7l8 6 8-6M4 7v10h16V7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                Itens fora de estoque podem ser encomendados
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7z" stroke="currentColor" stroke-width="1.8"/></svg>
+                Atendimento para escolas, professores e famílias
+              </li>
+            </ul>
+          </div>
+          <div class="contact-card">
+            <span class="eyebrow">Fale direto</span>
+            <h3 style="margin-top:8px;font-size:1.2rem;">Jorge Chame</h3>
+            <a class="btn btn-primary" href={whatsappLink('Olá! Vim pelo site e quero fazer um pedido.')} target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z" fill="#fff" fill-opacity=".18"/><path d="M17 14.3c-.3-.2-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.6.9-.8 1-.1.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.1-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.6-.4z" fill="#fff"/></svg>
+              Chamar no WhatsApp
+            </a>
+            <a class="btn btn-call" href={`tel:${site.phoneNumber}`}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9A6 6 0 0112 5a6 6 0 019.5 7c-2.5 4.5-9.5 9-9.5 9z" stroke="var(--caderno-2)" stroke-width="1.8"/></svg>
+              Ligar agora — {site.whatsappDisplay}
+            </a>
+            <a class="btn btn-ghost" href={site.instagram} target="_blank" rel="noopener">Ver no Instagram</a>
+            <a class="btn btn-ghost" href={site.facebook} target="_blank" rel="noopener">Ver no Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot-row">
+      <small>© 2026 Jorge Chame — Livros e materiais educativos.</small>
+      <div class="foot-links">
+        <a href={site.instagram} target="_blank" rel="noopener">Instagram</a>
+        <a href={site.facebook} target="_blank" rel="noopener">Facebook</a>
+        <a href={`tel:${site.phoneNumber}`}>Ligar</a>
+        <a href="#contato">WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+</Base>

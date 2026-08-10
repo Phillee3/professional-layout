@@ -1,0 +1,34 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/catalogo"
+public_folder: "/images/catalogo"
+
+collections:
+  - name: "catalog"
+    label: "Catálogo"
+    folder: "src/content/catalog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Etiqueta (categoria)", name: "tag", widget: "string" }
+      - { label: "Ordem de exibição", name: "order", widget: "number", default: 10 }
+      - label: "Ícone"
+        name: "icon"
+        widget: "select"
+        options: ["livros", "sala-de-aula", "casa", "jogos", "mapas", "banners"]
+      - { label: "Link do vídeo no Instagram (opcional)", name: "instagram_url", widget: "string", required: false, hint: "Cole o link do post/reel do Instagram mostrando o material sendo manuseado." }
+      - { label: "Descrição", name: "body", widget: "text" }
+
+  - name: "testimonials"
+    label: "Depoimentos"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome de quem depôs", name: "author", widget: "string" }
+      - { label: "Estrelas (1 a 5)", name: "stars", widget: "number", default: 5, min: 1, max: 5 }
+      - { label: "Publicar já?", name: "published", widget: "boolean", default: false, hint: "Deixe desmarcado até ter um depoimento real para colocar no lugar." }
+      - { label: "Texto do depoimento", name: "body", widget: "text" }
